@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Coordenadas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            text-align: center;
+        }
+        .form-section {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Conversor de Coordenadas</h1>
+
+        <!-- Formulario para convertir a coordenadas rectangulares -->
+        <div class="form-section">
+            <h2>Convertir a Coordenadas Rectangulares</h2>
+            <div class="form-group">
+                <label for="r">Radio (r):</label>
+                <input type="text" id="r" placeholder="Introduce el radio">
+            </div>
+            <div class="form-group">
+                <label for="theta">Ángulo (θ en grados):</label>
+                <input type="text" id="theta" placeholder="Introduce el ángulo en grados">
+            </div>
+            <button onclick="convertToRectangular()">Convertir a Rectangulares</button>
+        </div>
+
+        <!-- Formulario para convertir a coordenadas polares -->
+        <div class="form-section">
+            <h2>Convertir a Coordenadas Polares</h2>
+            <div class="form-group">
+                <label for="x">Coordenada X:</label>
+                <input type="text" id="x" placeholder="Introduce la coordenada X">
+            </div>
+            <div class="form-group">
+                <label for="y">Coordenada Y:</label>
+                <input type="text" id="y" placeholder="Introduce la coordenada Y">
+            </div>
+            <button onclick="convertToPolar()">Convertir a Polares</button>
+        </div>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function convertToRectangular() {
+            const r = parseFloat(document.getElementById('r').value);
+            const theta = parseFloat(document.getElementById('theta').value);
+
+            if (isNaN(r) || isNaN(theta)) {
+                document.getElementById('result').innerText = 'Por favor, introduce valores válidos.';
+                return;
+            }
+
+            // Convertir ángulo de grados a radianes
+            const thetaRad = theta * (Math.PI / 180);
+
+            // Fórmulas para la conversión
+            const x = r * Math.cos(thetaRad);
+            const y = r * Math.sin(thetaRad);
+
+            document.getElementById('result').innerText = `Coordenadas Rectangulares: X = ${x.toFixed(2)}, Y = ${y.toFixed(2)}`;
+        }
+
+        function convertToPolar() {
+            const x = parseFloat(document.getElementById('x').value);
+            const y = parseFloat(document.getElementById('y').value);
+
+            if (isNaN(x) || isNaN(y)) {
+                document.getElementById('result').innerText = 'Por favor, introduce valores válidos.';
+                return;
+            }
+
+            // Fórmulas para la conversión
+            const r = Math.sqrt(x * x + y * y);
+            const theta = Math.atan2(y, x) * (180 / Math.PI);
+
+            document.getElementById('result').innerText = `Coordenadas Polares: Radio (r) = ${r.toFixed(2)}, Ángulo (θ) = ${theta.toFixed(2)}°`;
+        }
+    </script>
+</body>
+</html>
